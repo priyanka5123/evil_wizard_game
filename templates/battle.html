@@ -17,6 +17,7 @@ HP: {{ wizard.hp }} / {{ wizard.max_hp }}
 
 {% if player.hp > 0 and wizard.hp > 0 %}
     <a href="/action/attack"><button>⚔️ Attack</button></a>
+    <a href="/action/special"><button>⭐ Special</button></a>
     <a href="/action/heal"><button>✨ Heal</button></a>
 {% else %}
     <h2>Game Over</h2>

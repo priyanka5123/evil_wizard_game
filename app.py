@@ -22,14 +22,29 @@ class Warrior(Character):
     def __init__(self, name):
         super().__init__(name, 140, 25)
 
+    def power_strike(self, enemy):
+        dmg = random.randint(30, 45)
+        enemy.hp -= dmg
+        return dmg
+
 class Mage(Character):
     def __init__(self, name):
         super().__init__(name, 100, 35)
+
+    def fireball(self, enemy):
+        dmg = random.randint(35,35)
+        enemy.hp -= dmg
+        return dmg
 
 class Archer(Character):
     def __init__(self, name):
         super().__init__(name, 110, 20)
 
+    def quick_shot(self, enemy):
+        dmg = random.randint(15, 25) * 2
+        enemy.hp -= dmg
+        return dmg
+    
 class EvilWizard(Character):
     def __init__(self):
         super().__init__("Dark Wizard",150, 18)
@@ -86,11 +101,18 @@ def action(move):
         return redirect("/battle")
     
     if move == "attack":
-        dmg = player.attack(wizard)
-        log.append(f"⚔️ You hit the wizard for {dmg} damage!")
+        log.append(f"⚔️ You deal {player.attack(wizard)} damage!")
     elif move == "heal":
         player.hp = min(player.max_hp, player.hp + 20)
         log.append("✨ You heal for 20 HP!")
+
+    elif move == "special":
+        if isinstance(player, Warrior):
+            log.append(f"💥 Power Strike hits for {player.power_strike(wizard)}!")
+        elif isinstance(player, Mage):
+            log.append(f"🔥 Fireball hits for {player.fireball(wizard)}!")
+        elif isinstance(player, Archer):
+            log.append(f"🏹 Quick Shot hits for {player.quick_shot(wizard)}!")
 
     if wizard.hp > 0:
         dmg = wizard.attack(player)
