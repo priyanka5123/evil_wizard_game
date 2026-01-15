@@ -11,12 +11,20 @@ class Character:
         self.hp = hp
         self.max_hp = hp
         self.atk = atk
+        self.potions = 3 
 
     def attack(self, enemy):
         dmg = random.randint(int(self.atk * 0.8), int(self.atk * 1.2))
         enemy.hp -= dmg
         return dmg
     
+    def use_potion(self):
+        if self.potions > 0:
+            heal = 30
+            self.hp = min(self.max_hp, self.hp + heal)
+            self.potions -= 1
+            return heal
+        return 0
 
 class Warrior(Character):
     def __init__(self, name):
@@ -62,6 +70,7 @@ def load():
 
     player= Character(p["name"], p["max_hp"], p["atk"])
     player.hp = p["hp"]
+    player.potions = p["potions"]
 
     wizard = Character(w["name"], w["max_hp"],w["atk"])
     wizard.hp = w["hp"]
@@ -125,6 +134,21 @@ def action(move):
 
     save(player, wizard, log)
     return redirect("/battle")
+
+@app.route("/action/potion")
+def potion():
+    player, wizard, log = load()
+
+    if player.potions > 0 and player.hp > 0:
+        heal = player.use_potion()
+        log.append(f"🧪 You used a potion and healed {heal} HP!")
+
+        if wizard.hp > 0:
+            log.append(f"🔥 Wizard hits you for {wizard.attack(player)}!")
+
+    save(player, wizard, log)
+    return redirect("/battle")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

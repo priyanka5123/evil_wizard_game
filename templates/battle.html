@@ -13,6 +13,8 @@ HP: {{ player.hp }} / {{ player.max_hp }}
 <h3>{{ wizard.name }}</h3>
 HP: {{ wizard.hp }} / {{ wizard.max_hp }}
 
+<p>🧪 Potions: {{ player.potions }}</p>
+
 <hr>
 
 {% if player.hp > 0 and wizard.hp > 0 %}
@@ -25,6 +27,10 @@ HP: {{ wizard.hp }} / {{ wizard.max_hp }}
 {% endif %}
 
 <hr>
+{% if player.potions > 0 %}
+    <a href="/action/potion"><button>🧪 Use Potion</button></a>
+{% endif %}
+
 
 <h3>📜 Battle Log</h3>
 {% for entry in log[-6:] %}
