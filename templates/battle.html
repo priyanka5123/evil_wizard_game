@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Battle</title>
 </head>
 <body>
 
+<div class="container">
+
 <h2>⚔️ Battle Arena</h2>
 
-<h3>{{ player.name }}</h3>
-HP: {{ player.hp }} / {{ player.max_hp }}
+<b>{{ player.name }}</b>
+<div class="bar">
+    <div class="hp-player" style="width: {{ (player.hp / player.max_hp) * 100 }}%"></div>
+</div>
+<p>{{ player.hp }} / {{ player.max_hp }} HP | 🧪 {{ player.potions }} potions</p>
 
-<h3>{{ wizard.name }}</h3>
-HP: {{ wizard.hp }} / {{ wizard.max_hp }}
-
-<p>🧪 Potions: {{ player.potions }}</p>
+<b>{{ wizard.name }}</b>
+<div class="bar">
+    <div class="hp-enemy" style="width: {{ (wizard.hp / wizard.max_hp) * 100 }}%"></div>
+</div>
+<p>{{ wizard.hp }} / {{ wizard.max_hp }} HP</p>
 
 <hr>
 
 {% if player.hp > 0 and wizard.hp > 0 %}
     <a href="/action/attack"><button>⚔️ Attack</button></a>
     <a href="/action/special"><button>⭐ Special</button></a>
-    <a href="/action/heal"><button>✨ Heal</button></a>
+    <a href="/action/potion"><button>🧪 Potion</button></a>
 {% else %}
-    <h2>Game Over</h2>
+    <div class="game-over">GAME OVER</div>
     <a href="/"><button>Restart</button></a>
 {% endif %}
 
 <hr>
-{% if player.potions > 0 %}
-    <a href="/action/potion"><button>🧪 Use Potion</button></a>
-{% endif %}
 
+<div class="log">
+    {% for entry in log[-8:] %}
+        <p>{{ entry }}</p>
+    {% endfor %}
+</div>
 
-<h3>📜 Battle Log</h3>
-{% for entry in log[-6:] %}
-    <p>{{ entry }}</p>
-{% endfor %}
-
+</div>
 </body>
 </html>

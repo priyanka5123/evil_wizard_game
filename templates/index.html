@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>RPG Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Flask RPG</title>
 </head>
 <body>
 
-<h1>🎮 Flask RPG</h1>
+<div class="container">
+    <h1>🎮 Flask RPG</h1>
 
-<form method="post">
-    Name: <input name="name" required><br><br>
+    <form method="post">
+        <input name="name" placeholder="Hero Name" required><br><br>
 
-    Class:
-    <select name="class">
-        <option>Warrior</option>
-        <option>Mage</option>
-        <option>Archer</option>
-    </select><br><br>
+        <select name="class">
+            <option>Warrior</option>
+            <option>Mage</option>
+            <option>Archer</option>
+        </select><br><br>
 
-    <button>Start Game</button>
-</form>
+        <button>Start Adventure</button>
+    </form>
+</div>
 
 </body>
 </html>
