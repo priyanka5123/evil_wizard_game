@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Battle</title>
+</head>
+<body>
+
+<h2>⚔️ Battle Arena</h2>
+
+<h3>{{ player.name }}</h3>
+HP: {{ player.hp }} / {{ player.max_hp }}
+
+<h3>{{ wizard.name }}</h3>
+HP: {{ wizard.hp }} / {{ wizard.max_hp }}
+
+<hr>
+
+{% if player.hp > 0 and wizard.hp > 0 %}
+    <a href="/action/attack"><button>⚔️ Attack</button></a>
+    <a href="/action/heal"><button>✨ Heal</button></a>
+{% else %}
+    <h2>Game Over</h2>
+    <a href="/"><button>Restart</button></a>
+{% endif %}
+
+<hr>
+
+<h3>📜 Battle Log</h3>
+{% for entry in log[-6:] %}
+    <p>{{ entry }}</p>
+{% endfor %}
+
+</body>
+</html>
